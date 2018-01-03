@@ -1,17 +1,111 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color= "danger">
     <ion-title>Home</ion-title>
+
+    <ion-buttons end>
+        <button ion-button icon-only (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+
+        
+        <button *ngIf="isValid" id="notification-button" ion-button icon-only (click)="clearBadges()">
+           <ion-icon name="notifications">   </ion-icon> 
+          </button>
+           <button *ngIf="!isValid" id="notification-button" ion-button icon-only  >
+              <ion-icon name="notifications-off"></ion-icon> 
+        </button>
+
+
+      </ion-buttons>
+
+
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+
+
+  
+
+<div  *ngIf="isValid" >
+    <ion-card-content  *ngFor="let item of notifi | async">
+        
+           {{item.title  }}     <br>
+           {{item.email  }}
+        
+    </ion-card-content>
+
+  </div>
+
+ 
+
+
+
+    <ion-item>
+        <ion-label floating>Badge Number</ion-label>
+        <ion-input type="number" [(ngModel)]="badgeNumber">
+        </ion-input>
+      </ion-item>
+
+    <button ion-button (click)="setBadges(badgeNumber)">Set Badges to {{badgeNumber}}</button>
+    
+    <button ion-button (click)="clearBadges()">Clear Badges</button>
+    <button ion-button (click)="requestPermission()">Request Permission</button>
+
+
+
+
+
+
+
+
+
+
+    <button ion-button (click)="alertFirebaseNotifi()">notiii</button>
+  
+
+      <button ion-button (click)="btnPushClicked()">Push notification</button>
+
+
+      <ion-card>
+          <ion-card-header>
+              {{ email }} 
+          </ion-card-header>
+          <ion-card-content>
+
+
+              <ion-list>
+
+                  <ion-item>
+                    <ion-label floating>Title</ion-label>
+                    <ion-input required  [(ngModel)]="title" type="text"></ion-input>
+                  </ion-item>
+                
+                  <ion-item>
+                    <ion-label floating>Body</ion-label>
+                    <ion-input  required [(ngModel)]="body" type="text"></ion-input>
+                  </ion-item>
+                
+                </ion-list>
+                <div padding>
+                    <button ion-button block  (click)="sendMessage()">Send</button>
+                  </div>
+              
+              </ion-card-content>
+        </ion-card>
+
+
+
+
+        <ion-card-content  *ngFor="let item of items | async">
+           
+            <ion-input hidden type="text" [(ngModel)]="infor.title" name="title"></ion-input>
+            <ion-input hidden type="text" [(ngModel)]="infor.body" name="body"></ion-input>
+            <ion-input hidden type="text" [(ngModel)]="infor.email" name="email"></ion-input>
+        </ion-card-content>
+
+
+
+
+ 
 </ion-content>
